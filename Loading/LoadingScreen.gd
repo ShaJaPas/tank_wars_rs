@@ -15,7 +15,7 @@ func _ready():
 	Client.connect("sign_in", self, "_on_sign_in")
 	Client.connect("files_sync", self, "_on_files_sync")
 	
-	Client.connect_to_server("192.168.1.57:51875")
+	Client.connect_to_server("209.25.141.180:60024")
 	
 func _on_sign_in(success: bool, player):
 	GlobalVariables.player = player
@@ -34,7 +34,7 @@ func alert(text: String, title: String='Message') -> void:
 	dialog.popup_centered()
 
 func reconnect():
-	Client.connect_to_server("192.168.1.57:51875")
+	Client.connect_to_server("209.25.141.180:60024")
 
 func sign_in():
 		load_pngs_from_directory("res://Menu/Ranks")
