@@ -1,0 +1,37 @@
+[package]
+name = "tank_wars_rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gdnative = "0.10.0"
+
+quinn = "0.8.4"
+tokio = { version = "1.20.1", features = ["macros", "rt-multi-thread", "fs"] }
+futures = { default-features = false, version = "0.3.23" }
+
+anyhow = "1.0.62"
+
+rustls = { default-features = false, version = "0.20.6", features = ["dangerous_configuration"] }
+
+lazy_static = "1.4.0"
+
+tracing = "0.1.36"
+tracing-subscriber = { version = "0.3.15", default-features = false, features = ["time", "std", "fmt"] }
+time = { version = ">=0.2.23", features = ["macros", "formatting"] } 
+
+rmp-serde = "1.1.0"
+serde = { version = "1.0.143", features = ["derive"] }
+
+fast_rsync = "0.1.4"
+pathdiff = "0.2.1"
+
+chrono = { version = ">=0.4.21", features = ["serde"] }
+bytes = "1.2.1"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = true
+codegen-units = 1

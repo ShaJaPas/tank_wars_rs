@@ -1,0 +1,101 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node",
+"class": "Client",
+"language": "NativeScript",
+"path": "res://Client.gdns"
+}, {
+"base": "Control",
+"class": "VirtualJoystick",
+"language": "GDScript",
+"path": "res://joystick/virtual_joystick.gd"
+} ]
+_global_script_class_icons={
+"Client": "",
+"VirtualJoystick": ""
+}
+
+[application]
+
+config/name="TankWars"
+run/main_scene="res://Loading/LoadingScreen.tscn"
+boot_splash/image="res://splash.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+boot_splash/=false
+
+[autoload]
+
+GlobalVariables="*res://GlobalVariables.gd"
+Client="*res://Client.gdns"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[gdnative]
+
+singletons=[  ]
+
+[global]
+
+"Custom Fonts"=false
+Custom=false
+
+[input]
+
+ui_left_move={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_right_move={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_up_move={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_down_move={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_up_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_down_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_left_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_right_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_clear_color=Color( 0, 0, 0, 1 )

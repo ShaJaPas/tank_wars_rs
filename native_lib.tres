@@ -1,0 +1,11 @@
+[gd_resource type="GDNativeLibrary" format=2]
+
+[resource]
+entry/Android.armeabi-v7a = "res://tank_wars_rust/target/armv7-linux-androideabi/release/libtank_wars_rust.so"
+entry/Android.arm64-v8a = "res://tank_wars_rust/target/aarch64-linux-android/release/libtank_wars_rust.so"
+entry/Windows.64 = "res://tank_wars_rust/target/x86_64-pc-windows-gnu/debug/tank_wars_rust.dll"
+entry/X11.64 = "res://tank_wars_rust/target/debug/libtank_wars_rust.so"
+dependency/Android.armeabi-v7a = [  ]
+dependency/Android.arm64-v8a = [  ]
+dependency/Windows.64 = [  ]
+dependency/X11.64 = [  ]

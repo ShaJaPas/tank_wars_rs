@@ -1,0 +1,96 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Fonts/Faulmann.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://NickName/GreenBtnPressed.png" type="Texture" id=2]
+[ext_resource path="res://Loading/Loading.png" type="Texture" id=3]
+[ext_resource path="res://Battle/MessageBox.png" type="Texture" id=4]
+[ext_resource path="res://NickName/GreenBtn.png" type="Texture" id=5]
+[ext_resource path="res://NickName/BtnPressed.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/SemiBold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://NickName/NickName.gd" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 127, 38 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 127, 38 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 127, 38 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 34
+font_data = ExtResource( 7 )
+
+[sub_resource type="GDScript" id=7]
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 7 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
+
+[node name="Box" type="TextureRect" parent="Background"]
+margin_left = 320.0
+margin_top = 150.0
+margin_right = 1002.0
+margin_bottom = 651.0
+texture = ExtResource( 4 )
+
+[node name="LineEdit" type="LineEdit" parent="Background/Box"]
+margin_left = 85.0
+margin_top = 160.0
+margin_right = 576.0
+margin_bottom = 234.0
+custom_fonts/font = SubResource( 3 )
+custom_styles/read_only = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+align = 1
+max_length = 15
+caret_blink = true
+
+[node name="Label" type="Label" parent="Background/Box"]
+margin_left = 194.0
+margin_top = 18.0
+margin_right = 450.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 1 )
+text = "Enter Nickname"
+
+[node name="Enter" type="TextureButton" parent="Background/Box"]
+margin_left = 183.0
+margin_top = 312.0
+margin_right = 491.0
+margin_bottom = 415.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 2 )
+flip_h = true
+script = SubResource( 7 )
+
+[node name="Label" type="Label" parent="Background/Box/Enter"]
+margin_left = 53.0
+margin_top = 21.0
+margin_right = 240.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 2 )
+text = "Enter"
+align = 1
+valign = 1
+
+[connection signal="pressed" from="Background/Box/Enter" to="." method="_on_Enter_pressed"]

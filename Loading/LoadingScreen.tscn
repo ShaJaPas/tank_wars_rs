@@ -1,0 +1,125 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Loading/Loading.png" type="Texture" id=1]
+[ext_resource path="res://Fonts/RobotoRegular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Loading/EternalLoading.png" type="Texture" id=3]
+[ext_resource path="res://Loading/LoadingScreen.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 256, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 384, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 512, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 640, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 768, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="DynamicFont" id=32]
+size = 48
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=33]
+resource_name = "Loading"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LoadingText:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.857143, 0.904762, 0.952381, 1.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=34]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("LoadingText:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 18 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LoadingText:percent_visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.857143 ]
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
+
+[node name="EternalLoading" type="AnimatedSprite" parent="Background"]
+position = Vector2( 640, 360 )
+frames = SubResource( 21 )
+frame = 5
+
+[node name="LoadingText" type="Label" parent="Background"]
+margin_left = 421.0
+margin_top = 425.0
+margin_right = 900.0
+margin_bottom = 482.0
+custom_fonts/font = SubResource( 32 )
+text = "Connecting to server..."
+percent_visible = 0.857143
+
+[node name="LoadingAnimation" type="AnimationPlayer" parent="Background"]
+anims/Loading = SubResource( 33 )
+anims/RESET = SubResource( 34 )
