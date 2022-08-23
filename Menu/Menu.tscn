@@ -306,7 +306,6 @@ __meta__ = {
 }
 
 [node name="HOME" type="Tabs" parent="Bg/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 62.0
@@ -509,6 +508,7 @@ align = 1
 valign = 1
 
 [node name="SHOP" type="Tabs" parent="Bg/TabContainer"]
+visible = false
 margin_left = 8.0
 margin_top = 62.0
 margin_right = 1033.0

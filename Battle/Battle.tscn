@@ -76,9 +76,9 @@ script = ExtResource( 1 )
 z_index = 3
 
 [node name="Ping" type="Label" parent="UI"]
-margin_left = 1186.0
+margin_left = 1150.0
 margin_top = 11.0
-margin_right = 1260.0
+margin_right = 1224.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 2 )
 align = 2

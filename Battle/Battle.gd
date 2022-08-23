@@ -9,6 +9,9 @@ var level
 var tank
 var scene
 
+var server_frame = -1
+var client_frame = 1
+
 const WIDTH = 1280
 const HEIGHT = 720
 const PERIOD = 1.0 / 30.0
@@ -33,6 +36,7 @@ var explosions = []
 
 onready var move_joystick: VirtualJoystick = get_node("UI/Move")
 onready var shoot_joystick: VirtualJoystick = get_node("UI/Shoot")
+onready var explosion_res = GlobalVariables.loader.get_resource("res://Battle/Explosion.tscn")
 
 func set_map_size(x: int, y: int):
 	x -= WIDTH / 2
@@ -45,18 +49,20 @@ func _on_Ok_pressed():
 	call_deferred("set_new_scene", scene)
 
 func _ready():
+	
 	GlobalVariables.current_scene = self
 	Client.connect("explosion_packet", self, "__on_explosion_packet")
 	Client.connect("battle_end", self, "_battle_end")
 	
-	initial_packet.time_left -= wait_time
-	max_op_hp = initial_packet.opponent_data.hp
-	max_my_hp = initial_packet.my_data.hp
-	max_op_hp_width = get_node("UI/OpHP/Fill").rect_size.x
-	max_my_hp_width = get_node("UI/MyHP/Fill").rect_size.x
-	
 	op_tank_info = GlobalVariables.get_tank_by_id(op_tank.id)
 	my_tank_info = GlobalVariables.get_tank_by_id(tank.id)
+	
+	initial_packet.time_left -= wait_time
+	client_frame = initial_packet.frame_num
+	max_op_hp = int(op_tank_info.characteristics.hp as float * (1 + (op_tank.level - 1) as float / 10))
+	max_my_hp = int(my_tank_info.characteristics.hp as float * (1 + (level - 1) as float / 10))
+	max_op_hp_width = get_node("UI/OpHP/Fill").rect_size.x
+	max_my_hp_width = get_node("UI/MyHP/Fill").rect_size.x
 	$UI/Nick.text = op_nick + " (" + op_tank_info.characteristics.name + " LVL" + str(op_tank.level) + ")" 	
 	Client.connect("battle_packet", self, "_on_battle_packet")
 	$Map.texture.atlas = load("res://Maps/" + map.name + ".png")
@@ -112,7 +118,7 @@ func _on_battle_packet(packet):
 	call_deferred("assign", packet)
 
 func _on_explosion_packet(x, y, hit):
-	var explosion = GlobalVariables.loader.get_resource("res://Battle/Explosion.tscn").instance()
+	var explosion = explosion_res.instance()
 	explosion.hit = hit
 	y = $Map.texture.atlas.get_height() - y
 	explosion.rect_position = $Map.rect_position + Vector2(x - $Map.texture.region.position.x, y - $Map.texture.region.position.y)
@@ -123,6 +129,8 @@ func _battle_end(data, profile):
 	call_deferred("__battle_end", data, profile)
 
 func set_new_scene(scene_resource):
+	if scene_resource == null:
+		scene_resource = GlobalVariables.loader.get_resource("res://Menu/Menu.tscn").instance()
 	queue_free()
 	get_tree().get_root().add_child(scene_resource)
 	
@@ -154,10 +162,11 @@ func reverse_angle(angle):
 	vec.y *= -1
 	return rad2deg(vec.angle())
 
-func _on_ok_pressed():
-	print("pressed")
-
 func assign(packet):
+	if server_frame >= packet.frame_num:
+		return
+	else:
+		server_frame = packet.frame_num
 	initial_packet = packet
 	c_tank_body.rotation_degrees = reverse_angle(initial_packet.my_data.body_rotation)
 	op_tank_body.rotation_degrees = reverse_angle(initial_packet.opponent_data.body_rotation)
@@ -220,7 +229,9 @@ func _process(delta):
 	time += delta
 	if time >= PERIOD:
 		time -= PERIOD
-		Client.send_position(body_rotation, gun_rotation, in_move)
+		Client.send_position(client_frame, body_rotation, gun_rotation, in_move)
+		client_frame += 1
+	
 	if move_joystick.get_output() != Vector2.ZERO:
 		var move = move_joystick.get_output()
 		move.y *= -1

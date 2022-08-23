@@ -82,7 +82,8 @@ pub enum Packet {
         my_tank: Tank,
         initial_packet: GamePacket,
     },
-
+    MapNotFoundResponse,
+    
     //Without responses
     LeaveMatchMakerRequest,
     Shoot,
@@ -146,6 +147,7 @@ impl FromVariant for BattleResult {
 #[derive(Debug, Serialize, Deserialize, ToVariant, FromVariant)]
 pub struct GamePacket {
     time_left: u16,
+    frame_num: u16,
     my_data: GamePlayerData,
     opponent_data: GamePlayerData,
 }
@@ -153,6 +155,7 @@ pub struct GamePacket {
 //This packet client sends to server
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PlayerPosition {
+    pub frame_num: u16,
     pub body_rotation: f32,
     pub gun_rotation: f32,
     pub moving: bool,

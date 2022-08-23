@@ -229,9 +229,10 @@ impl Client {
     }
 
     #[export]
-    fn send_position(&self, _owner: &Node, body_rot: f32, gun_rot: f32, moving: bool) {
+    fn send_position(&self, _owner: &Node, frame: i32, body_rot: f32, gun_rot: f32, moving: bool) {
         if let Some(conn) = self.connection.as_ref() {
             let packet = PlayerPosition {
+                frame_num: frame as u16,
                 body_rotation: body_rot,
                 gun_rotation: gun_rot,
                 moving,
@@ -542,6 +543,12 @@ impl Client {
                 owner.assume_safe().emit_signal(
                     "battle_end",
                     &[result.to_variant(), profile.to_variant()],
+                );
+            },
+            Packet::MapNotFoundResponse => unsafe {
+                owner.assume_safe().emit_signal(
+                    "map_found",
+                    &[None::<()>.to_variant()],
                 );
             },
             _ => {}
