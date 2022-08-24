@@ -1,3 +1,4 @@
+Godot game made with gdnative rust networking module, which uses QUIC and raw UDP datagrams.
 ### Lines of code ###
     ===============================================================================
      Language            Files        Lines         Code     Comments       Blanks
